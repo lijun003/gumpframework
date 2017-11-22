@@ -32,4 +32,20 @@ public class PublicUtil {
     public static boolean isNotEmpty(Object obj){
         return !isEmpty(obj);
     }
+
+    /**
+     * 拼接字符串
+     *
+     * @param
+     * @return
+     */
+    public static String toAppendStr(Object... strs) {
+        StringBuffer sb = new StringBuffer();
+        for (Object str : strs) {
+            if (isNotEmpty(str)) {
+                sb.append(str);
+            }
+        }
+        return sb.toString();
+    }
 }

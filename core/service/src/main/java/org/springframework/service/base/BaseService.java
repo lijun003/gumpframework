@@ -32,52 +32,5 @@ public class BaseService<T extends BaseEntity> {
         }
     }
 
-    /**
-     * 逻辑删除
-     *
-     * @param id
-     * @return
-     */
-
-    public int deleteById(String id) {
-        return operateStatusById(id, BaseEntity.FLAG_DELETE);
-    }
-
-    public int operateStatusById(String id, Integer status) {
-        return baseRepository.createQuery(
-                PublicUtil.toAppendStr("update ", persistentClass.getSimpleName(), " set status='", status,
-                        "', updateId=:p2, updateTime=:p3 where id = :p1"),
-                id, SecurityUtil.getCurrentAuditor(), PublicUtil.getCurrentDate()).executeUpdate();
-    }
-
-    /**
-     * 逻辑删除 集合
-     *
-     * @param idList
-     * @return
-     */
-    public void deleteById(List<String> idList) {
-        for (String id : idList) {
-            deleteById(id);
-        }
-    }
-
-    /**
-     * 逻辑删除
-     *
-     * @param id
-     * @param likeParentIds
-     * @return
-     */
-    public int deleteById(String id, String likeParentIds) {
-        return operateStatusById(id, likeParentIds, BaseEntity.FLAG_DELETE);
-    }
-
-    public int operateStatusById(String id, String likeParentIds, Integer status) {
-        return baseRepository.createQuery(
-                PublicUtil.toAppendStr("update ", persistentClass.getSimpleName(), " set status='", status,
-                        "', updateId=:p3, updateTime=:p4 where id = :p1 or parentIds like :p2"),
-                id, likeParentIds, SecurityUtil.getCurrentAuditor(), PublicUtil.getCurrentDate()).executeUpdate();
-    }
 
 }
