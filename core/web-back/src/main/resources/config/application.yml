@@ -1,3 +1,5 @@
+server:
+    port: 8060
 spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
@@ -7,10 +9,10 @@ spring:
         password: 123698745
         hikari:
             data-source-properties:
-                cachePrepStmts: true
+                cachePrepStmts: false
                 prepStmtCacheSize: 250
                 prepStmtCacheSqlLimit: 2048
-                useServerPrepStmts: true
+                useServerPrepStmts: false
     jpa:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL
@@ -18,7 +20,5 @@ spring:
         properties:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
-            hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
-server:
-    port: 8060
+            hibernate.generate_statistics: false
+

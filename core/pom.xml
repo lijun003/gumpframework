@@ -20,7 +20,6 @@
         <module>service</module>
         <module>web-base</module>
         <module>web-back</module>
-        <module>web-test</module>
         <module>util</module>
     </modules>
 

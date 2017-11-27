@@ -1,4 +1,4 @@
-package test.resource;
+package org.gumpframework.web.back.resource;
 
 import org.gumpframework.util.LogUtil;
 import org.gumpframework.web.base.BaseResource;

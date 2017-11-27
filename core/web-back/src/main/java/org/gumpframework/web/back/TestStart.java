@@ -1,4 +1,4 @@
-package test;
+package org.gumpframework.web.back;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,4 +27,5 @@ public class TestStart {
                     environment.getProperty("server.port"), InetAddress.getLocalHost().getHostAddress(),environment.getProperty("server.port"));
 
     }
+
 }
