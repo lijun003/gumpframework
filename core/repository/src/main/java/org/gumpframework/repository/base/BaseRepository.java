@@ -1,4 +1,4 @@
-package org.gumpframework.repository;
+package org.gumpframework.repository.base;
 
 import org.gumpframework.domain.base.BaseEntity;
 import org.gumpframework.util.bean.PageModel;

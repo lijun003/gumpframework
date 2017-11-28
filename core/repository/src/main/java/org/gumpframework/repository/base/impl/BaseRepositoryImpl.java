@@ -1,9 +1,9 @@
-package org.gumpframework.repository.impl;
+package org.gumpframework.repository.base.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.gumpframework.domain.base.BaseEntity;
-import org.gumpframework.repository.BaseRepository;
+import org.gumpframework.repository.base.BaseRepository;
 import org.gumpframework.util.LogUtil;
 import org.gumpframework.util.PublicUtil;
 import org.gumpframework.util.QueryUtil;

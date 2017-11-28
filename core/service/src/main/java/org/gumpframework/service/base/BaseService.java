@@ -1,8 +1,8 @@
-package org.springframework.service.base;
+package org.gumpframework.service.base;
 
 
 import org.gumpframework.domain.base.BaseEntity;
-import org.gumpframework.repository.BaseRepository;
+import org.gumpframework.repository.base.BaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
 @Service
 @Transactional
@@ -31,6 +30,8 @@ public class BaseService<T extends BaseEntity> {
             persistentClass = (Class<T>) parameterizedType[0];
         }
     }
+
+
 
 
 }

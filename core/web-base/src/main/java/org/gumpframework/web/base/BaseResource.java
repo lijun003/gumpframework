@@ -12,9 +12,7 @@ import java.io.IOException;
 
 public class BaseResource {
 
-    private Logger logger = LogUtil.getLogger(this.getClass());
-
-
+   public Logger logger = LogUtil.getLogger(this.getClass());
 
     @ExceptionHandler
     public String bindException(Exception e, HttpServletRequest request, HttpServletResponse response){
