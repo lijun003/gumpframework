@@ -1,0 +1,24 @@
+server:
+    port: 8060
+spring:
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost:3306/frame?useUnicode=true&characterEncoding=utf8&useSSL=false
+        name:
+        username: root
+        password: 123698745
+        hikari:
+            data-source-properties:
+                cachePrepStmts: false
+                prepStmtCacheSize: 250
+                prepStmtCacheSqlLimit: 2048
+                useServerPrepStmts: false
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        database: MYSQL
+        show-sql: true
+        properties:
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: false
+
