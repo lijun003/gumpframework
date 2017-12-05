@@ -1,18 +1,13 @@
 package org.gumpframework.util;
 
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyDescriptor;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
+import javax.persistence.Query;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
+
 
 @SuppressWarnings("rawtypes")
 public class QueryUtil {
@@ -392,5 +387,5 @@ public class QueryUtil {
 		sb.append(tempSb.toString());
 		return sb.toString().split(",");
 	}
-	
+
 }

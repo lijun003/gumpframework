@@ -28,11 +28,6 @@ public interface BaseRepository<T extends BaseEntity> {
     /** 清除缓存数据 */
     void clear();
 
-    /* (非 Javadoc)
-    * <p>Title: clearLevel2Cache</p>
-    * <p>Description: </p>
-    * @see com.albedo.java.common.persistence.service.impl.IBaseUtilService#clearLevel2Cache()
-    */
     Query createQuery(String HQL, Object... params);
     SQLQuery createSqlQuery(String SQL, Object... params);
 
@@ -69,51 +64,27 @@ public interface BaseRepository<T extends BaseEntity> {
     Object getObjectBySQL(String SQL, List<QueryCondition> conditionList, Object... params);
     Object getObjectBySQL(String SQL, Object... params);
 
-
-    Object getByQL(String QL, boolean isSql, boolean isCache, boolean isList, int maxSize, List<QueryCondition> conditionList, Object... params);
-
     Boolean doCheckByProperty(T entity);
 
     Boolean doCheckByPK(T entity);
 
-
-    /*
-     * (非 Javadoc) <p>Title: execute</p> <p>Description: </p>
-     * @param HQL
-     * @param params
-     * @return
-     * @see com.albedo.java.common.persistence.service.impl.IBaseUtilService#execute(java.lang.String, java.lang.Object)
-     */
     int execute(String HQL, Object... params);
 
-    /*
-     * (非 Javadoc) <p>Title: executeSQL</p> <p>Description: </p>
-     * @param SQL
-     * @param params
-     * @return
-     * @see com.albedo.java.common.persistence.service.impl.IBaseUtilService#executeSQL(java.lang.String, java.lang.Object)
-     */
     int executeSQL(String SQL, Object... params);
 
-    /*
-     * (非 Javadoc) <p>Title: executeCall</p> <p>Description: </p>
-     * @param call
-     * @param params
-     * @see com.albedo.java.common.persistence.service.impl.IBaseUtilService#executeCall(java.lang.String, java.lang.Object)
-     */
     void executeCall(String call, Object... params);
 
-    public PageModel<?> getHQLPage(String QL, PageModel<?> pm, Object... params);
+    public PageModel<?> getHQLPage(String HQL, PageModel<?> pm, Object... params);
 
-    public PageModel<?> getSQLPage(String QL, PageModel<?> pm, Object... params);
+    public PageModel<?> getSQLPage(String SQL, PageModel<?> pm, Object... params);
 
-    public PageModel<?> getHQLPage(String QL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params);
+    public PageModel<?> getHQLPage(String HQL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params);
 
-    public PageModel<?> getSQLPage(String QL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params);
+    public PageModel<?> getSQLPage(String SQL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params);
 
-    public PageModel<?> getQLPage(String QL, PageModel<?> pm, boolean isSql, boolean isCal, boolean isCache,
-                                   Object... params);
+    Long getCountBySQl(String SQL,Object... params);
 
-    public Long getCountByQL(String QL, boolean isSql, boolean isCache,
-                              List<QueryCondition> conditionList, Object... params);
+    Long getCountByHQL(String HQL,Object... params);
+
+
 }

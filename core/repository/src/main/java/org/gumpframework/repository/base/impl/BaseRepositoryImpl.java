@@ -222,7 +222,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
         return null;
     }
 
-    @Override
+
     public PageModel<T> getQLPage(String QL, PageModel<?> pm, boolean isSql, boolean isCal, boolean isCache, Object... params) {
         if (pm==null) return null;
         if (pm.getPageNumber()<0||pm.getPageSize()<=0||!pm.getUsePage()){
@@ -232,7 +232,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
             pm.setRecordsTotal(getCountByQL(null,isSql,isCache,null,params));
             pm.setData((List) getPageModelData(QL, isSql,pm, isCache, isCal, null, params));
         }
-        return null;
+        return (PageModel<T>) pm;
     }
 
     /**
@@ -244,7 +244,6 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
      * @param params
      * @return
      */
-    @Override
     public Long getCountByQL(String QL, boolean isSql, boolean isCache, List<QueryCondition> conditionList, Object... params) {
        try {
            Map<String,Object> map = Maps.newHashMap();
@@ -262,6 +261,29 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
            throw new RuntimeException(e);
        }
     }
+
+    /**
+     * 根据sql获取满足条件的数量
+     * @param SQL
+     * @param params
+     * @return
+     */
+    @Override
+    public Long getCountBySQl(String SQL,Object... params){
+        return getCountByQL(SQL,true,false,null,params);
+    }
+
+    /**
+     * 根据HQL获取满足条件的数量
+     * @param HQL
+     * @param params
+     * @return
+     */
+    @Override
+    public Long getCountByHQL(String HQL,Object... params){
+        return getCountByQL(HQL,false,false,null,params);
+    }
+
     /**
      * 获取分页数据
      * @param QL
@@ -356,7 +378,6 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
      * @param params  按照順序傳入的查詢參數
      * @return
      */
-    @Override
     public Object getByQL(String QL, boolean isSql, boolean isCache, boolean isList, int maxSize, List<QueryCondition> conditionList, Object... params) {
         try {
             Map<String, Object> map = Maps.newHashMap();
@@ -441,6 +462,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
         }
         return lst;
     }
+
     /**
      * 自动将参数注入到Query对象中  工具类
      *
@@ -465,11 +487,10 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
                     continue;
                 }
                 parseQL=parseQL.replace(item,PublicUtil.toAppendStr("\'",val,"\'"));
-                sb.append(key).append("=").append(val).append(", ");
                 query.setParameter(key, val);
             }
             logger.info("拼接好的QL-------》{}",parseQL);
-            logger.info(sb.toString());
+
         }
     }
 }
