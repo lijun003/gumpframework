@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping(value = "/")
@@ -17,7 +20,8 @@ public class MqResouce extends BaseResource {
     private BackUserService backUserService;
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
-    public String index(){
-        return "hello test";
+    public List<Map<String,Object>> index(){
+        List<Map<String,Object>>  user = backUserService.login("代欣雨","123456");
+        return user;
     }
 }

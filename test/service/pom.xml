@@ -3,17 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>core</artifactId>
-        <groupId>org.gumpframework</groupId>
+        <artifactId>test</artifactId>
+        <groupId>gump-test</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
     <artifactId>service</artifactId>
+
     <dependencies>
+
+        <dependency>
+            <groupId>gump-test</groupId>
+            <artifactId>repository</artifactId>
+            <version>${gump.test.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.gumpframework</groupId>
-            <artifactId>repository</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>service</artifactId>
+            <version>${gump.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.gumpframework</groupId>
+                    <artifactId>repository</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

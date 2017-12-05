@@ -48,4 +48,12 @@ public class PublicUtil {
         }
         return sb.toString();
     }
+
+    public static Long parseLong(Object value, long defaultValue) {
+        try {
+            return Long.parseLong(String.valueOf(value));
+        }catch (Exception ex){
+            return defaultValue;
+        }
+    }
 }

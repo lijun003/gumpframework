@@ -13,4 +13,9 @@ hs_err_pid*
 
 *.iml
 .idea
-target/
+entity/target/
+repository/target/
+service/target/
+web-back/target/
+web-base/target/
+util/target/

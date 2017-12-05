@@ -23,6 +23,11 @@ public class PageModel<T> implements Pageable, Serializable {
 
     private Sort sort;
 
+    /**
+     * 是否只获取分页数据，方便接口直接复用
+     */
+    private Boolean usePage;
+
     private long recordsFiltered;
     private long recordsTotal;
     private List<Map<String, Object>> extraList;
@@ -93,6 +98,14 @@ public class PageModel<T> implements Pageable, Serializable {
     public void setPageInstance(Page<T> page) {
         setData(page.getContent());
         setRecordsTotal(page.getTotalElements());
+    }
+
+    public Boolean getUsePage() {
+        return usePage;
+    }
+
+    public void setUsePage(Boolean usePage) {
+        this.usePage = usePage;
     }
 
     public PageModel() {

@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
 
-@ComponentScan(basePackages = {"org.gumpframework.*"})
+@ComponentScan(basePackages = {"com.dai.*","org.gumpframework.*"})
 @SpringBootApplication
 public class TestStart {
 
