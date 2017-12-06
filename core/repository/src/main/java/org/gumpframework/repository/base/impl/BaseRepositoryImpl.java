@@ -249,8 +249,8 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
             sb.append(temp);
 
         } catch (Exception e) {
-            logger.error("在根据原始分页HQL获取总记录条数的HQL时出现异常，异常SQL-->" + QL);
-            logger.error(e.getMessage());
+            log.error("在根据原始分页HQL获取总记录条数的HQL时出现异常，异常SQL-->" + QL);
+            log.error(e.getMessage());
         }
         return sb.toString();
     }
