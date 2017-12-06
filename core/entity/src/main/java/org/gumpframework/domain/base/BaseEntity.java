@@ -1,5 +1,6 @@
 package org.gumpframework.domain.base;
 
+import lombok.Data;
 import org.gumpframework.util.UniqueUtil;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 /**
  *  create by GumpDai
  */
+@Data
 public class BaseEntity implements Serializable{
 
     @Id
@@ -19,13 +21,5 @@ public class BaseEntity implements Serializable{
     @PrePersist
     public void prePersist(){
         this.id = UniqueUtil.uuid();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }
