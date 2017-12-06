@@ -78,9 +78,9 @@ public interface BaseRepository<T extends BaseEntity> {
 
     public PageModel<?> getSQLPage(String SQL, PageModel<?> pm, Object... params);
 
-    public PageModel<?> getHQLPage(String HQL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params);
+    public PageModel<?> getHQLPage(String HQL, PageModel<?> pm,boolean isCache, Object... params);
 
-    public PageModel<?> getSQLPage(String SQL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params);
+    public PageModel<?> getSQLPage(String SQL, PageModel<?> pm,boolean isCache, Object... params);
 
     Long getCountBySQl(String SQL,Object... params);
 
