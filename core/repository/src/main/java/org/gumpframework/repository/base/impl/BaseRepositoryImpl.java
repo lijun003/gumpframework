@@ -203,36 +203,58 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
     }
 
     @Override
-    public PageModel<T> getHQLPage(String QL, PageModel<?> pm, Object... params) {
-        return null;
+    public PageModel<T> getHQLPage(String HQL, PageModel<?> pm, Object... params) {
+        return getQLPage(HQL,pm,false,false,params);
     }
 
     @Override
-    public PageModel<T> getSQLPage(String QL, PageModel<?> pm, Object... params) {
-        return null;
+    public PageModel<T> getSQLPage(String SQL, PageModel<?> pm, Object... params) {
+        return getQLPage(SQL,pm,true,false,params);
     }
 
     @Override
-    public PageModel<T> getHQLPage(String QL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params) {
-        return null;
+    public PageModel<T> getHQLPage(String HQL, PageModel<?> pm, boolean isCache, Object... params) {
+        return getQLPage(HQL,pm,true,isCache,params);
     }
-
     @Override
-    public PageModel<T> getSQLPage(String QL, PageModel<?> pm, boolean isCal, boolean isCache, Object... params) {
-        return null;
+    public PageModel<T> getSQLPage(String SQL, PageModel<?> pm, boolean isCache, Object... params) {
+        return getQLPage(SQL,pm,true,isCache,params);
     }
 
-
-    public PageModel<T> getQLPage(String QL, PageModel<?> pm, boolean isSql, boolean isCal, boolean isCache, Object... params) {
+    public PageModel<T> getQLPage(String QL, PageModel<?> pm, boolean isSql, boolean isCache, Object... params) {
         if (pm==null) return null;
         if (pm.getPageNumber()<0||pm.getPageSize()<=0||!pm.getUsePage()){
-            pm.setRecordsTotal(getCountByQL(null,isSql,isCache,null,params));
+            pm.setRecordsTotal(getCountByQL(parseToCountQL(QL),isSql,isCache,null,params));
             pm.setData((List) getByQL(QL,isSql,isCache,true,0,null,params));
         }else {
-            pm.setRecordsTotal(getCountByQL(null,isSql,isCache,null,params));
-            pm.setData((List) getPageModelData(QL, isSql,pm, isCache, isCal, null, params));
+            pm.setRecordsTotal(getCountByQL(parseToCountQL(QL),isSql,isCache,null,params));
+            pm.setData((List) getPageModelData(QL, isSql,pm, isCache,null, params));
         }
         return (PageModel<T>) pm;
+    }
+
+    private String parseToCountQL(String QL){
+        StringBuffer sb = new StringBuffer();
+        try {
+            String temp = "", tempSql = QL.toUpperCase();
+            if (tempSql.indexOf("SELECT") != -1) {
+                temp = QL.substring(QueryUtil.findOuterFromIndex(tempSql));
+            } else {
+                temp = QL;
+            }
+            if (tempSql.indexOf(" ORDER BY") != -1) {
+                int orderIndex  = temp.indexOf(" order by");
+                if(orderIndex == -1) orderIndex = temp.indexOf(" ORDER BY");
+                temp = temp.substring(0, orderIndex);
+            }
+            sb.append("select count(*) ");
+            sb.append(temp);
+
+        } catch (Exception e) {
+            logger.error("在根据原始分页HQL获取总记录条数的HQL时出现异常，异常SQL-->" + QL);
+            logger.error(e.getMessage());
+        }
+        return sb.toString();
     }
 
     /**
@@ -290,12 +312,11 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
      * @param isSql
      * @param pm
      * @param isCache
-     * @param isCal
      * @param conditionList
      * @param params
      * @return
      */
-    private List<T> getPageModelData(String QL, boolean isSql, PageModel pm, boolean isCache, boolean isCal,
+    private List<T> getPageModelData(String QL, boolean isSql, PageModel pm, boolean isCache,
                                      List<QueryCondition> conditionList,
                                      Object... params) {
         try {
@@ -304,7 +325,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
 //                QL = QueryUtil.convertJsonToQueryCondition(QL, conditionList, null, map);
             Query query = isSql ? createSqlQuery(QL, map, params) : createQuery(QL, map, params);
             query.setMaxResults(pm.getPageSize());
-            query.setFirstResult(isCal ? (pm.getPageNumber() - 1) * pm.getPageSize() : 0);
+            query.setFirstResult( (pm.getPageNumber() - 1) * pm.getPageSize());
             if (isCache)
                 query.setCacheable(true);
             List lst = query.list();
@@ -490,7 +511,6 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
                 query.setParameter(key, val);
             }
             logger.info("拼接好的QL-------》{}",parseQL);
-
         }
     }
 }
