@@ -1,22 +1,19 @@
 package org.gumpframework.web.base;
 
 
-import org.gumpframework.util.LogUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.gumpframework.util.PublicUtil;
-import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+@Slf4j
 public class BaseResource {
-
-   public Logger logger = LogUtil.getLogger(this.getClass());
 
     @ExceptionHandler
     public String bindException(Exception e, HttpServletRequest request, HttpServletResponse response){
-        logger.error("请求连接:{} 操作异常:{}",request.getRequestURI(),e.getMessage());
+        log.error("请求连接:{} 操作异常:{}",request.getRequestURI(),e.getMessage());
 
 
         String requestType = request.getHeader("X-Requested-With");
@@ -40,7 +37,7 @@ public class BaseResource {
             response.setContentType("text/json;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             String str = object instanceof String ? (String) object : (String) object;
-            logger.info("write:{}",str);
+            log.info("write:{}",str);
             response.getWriter().write(str);
         }catch (IOException e){
             e.printStackTrace();

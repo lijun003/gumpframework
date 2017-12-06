@@ -1,16 +1,13 @@
 package org.gumpframework.util.bean;
 
-import org.gumpframework.util.LogUtil;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-
+@Slf4j
 public class Parameter extends HashMap<String, Object> implements java.io.Serializable {
-
-	private static Logger logger = LogUtil.getLogger(Parameter.class);
 
 	private static final long serialVersionUID = 1L;
 

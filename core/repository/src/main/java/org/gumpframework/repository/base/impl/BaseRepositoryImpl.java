@@ -2,9 +2,9 @@ package org.gumpframework.repository.base.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.gumpframework.domain.base.BaseEntity;
 import org.gumpframework.repository.base.BaseRepository;
-import org.gumpframework.util.LogUtil;
 import org.gumpframework.util.PublicUtil;
 import org.gumpframework.util.QueryUtil;
 import org.gumpframework.util.bean.PageModel;
@@ -14,7 +14,6 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -31,9 +30,8 @@ import java.util.Map;
  * 通用baseRepository实现类,create by GumpDai
  */
 @Component
+@Slf4j
 public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<T> {
-
-    private Logger logger = LogUtil.getLogger(this.getClass());
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -195,7 +193,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
                         cstmt.execute();
                     }
                 } catch (SQLException e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                     throw new RuntimeException(e);
                 }
             }
@@ -256,8 +254,8 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
                return 0L;
            }
        }catch (Exception e){
-           logger.error("QL----->"+QL);
-           logger.error(e.getMessage());
+           log.error("QL----->"+QL);
+           log.error(e.getMessage());
            throw new RuntimeException(e);
        }
     }
@@ -311,8 +309,8 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
             return parseSqlRsList(lst, isSql, QL);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("在获取分页数据源的getData()出现异常，异常HQL-->" + QL);
-            logger.error(e.getMessage());
+            log.error("在获取分页数据源的getData()出现异常，异常HQL-->" + QL);
+            log.error(e.getMessage());
         }
         return null;
     }
@@ -404,8 +402,8 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
                 return lst;
             }
         } catch (Exception e) {
-            logger.error("QL------->" + QL);
-            logger.error(e.getMessage());
+            log.error("QL------->" + QL);
+            log.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -472,7 +470,7 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
      */
     private void setParams(String QL, Query query, Map<String, Object> params) {
         if (PublicUtil.isNotEmpty(params)) {
-            logger.info("params {}", params);
+            log.info("params {}", params);
             Iterator<String> keys = params.keySet().iterator();
             String key = "";
             Object val = null;
@@ -483,13 +481,13 @@ public class BaseRepositoryImpl<T extends BaseEntity> implements BaseRepository<
                 val = params.get(key);
                 String item = PublicUtil.toAppendStr(":", key);
                 if (!QL.contains(item)){
-                    logger.warn("多余的参数:" + key + ",值：" + val);
+                    log.warn("多余的参数:" + key + ",值：" + val);
                     continue;
                 }
                 parseQL=parseQL.replace(item,PublicUtil.toAppendStr("\'",val,"\'"));
                 query.setParameter(key, val);
             }
-            logger.info("拼接好的QL-------》{}",parseQL);
+            log.info("拼接好的QL-------》{}",parseQL);
 
         }
     }
